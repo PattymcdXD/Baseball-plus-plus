@@ -56,7 +56,7 @@ const App = () => {
     ToastAndroid.show('Innings Reset', ToastAndroid.SHORT);
   }
   
-    const handleInningChange3 = () => {
+  const handleInningChange3 = () => {
     Alert.alert('Reset Innings?', 'Are you sure you want to reset the inning number?', [
       {
         text: 'Cancel',
@@ -66,6 +66,25 @@ const App = () => {
       {text: 'Yes', onPress: resetInning},
     ]);
   }
+
+
+  const resetScore = () => {
+    setHomeCount(0),
+    setAwayCount(0),
+    ToastAndroid.show('Score Reset', ToastAndroid.SHORT);
+  }
+
+  const handleScoreChange = () => {
+    Alert.alert('Reset Score?', 'Are you sure you want to reset the number of runs?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Yes', onPress: resetScore},
+    ]);
+  }
+
 
   
   
@@ -378,7 +397,7 @@ const App = () => {
 
             <TouchableOpacity 
             style={styles.button} 
-            onPress={homeCount + 1}>
+            onPress={() => setHomeCount(homeCount + 1)}>
               <View style={{justifyContent: "center", alignItems: "center"}}>
                 <Text style={styles.buttonText}>
                   Home
@@ -388,7 +407,7 @@ const App = () => {
 
             <TouchableOpacity 
             style={styles.button} 
-            onPress={handleInningChange2}>
+            onPress={() => setAwayCount(awayCount + 1)}>
               <View style={{justifyContent: "center", alignItems: "center"}}>
                 <Text style={styles.buttonText}>
                   Away
@@ -398,7 +417,7 @@ const App = () => {
             
             <TouchableOpacity 
             style={styles.button} 
-            onPress={handleInningChange3}>
+            onPress={handleScoreChange}>
               <View style={{justifyContent: "center", alignItems: "center"}}>
                 <Text style={styles.buttonText}>
                   Reset
