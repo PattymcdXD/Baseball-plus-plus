@@ -5,17 +5,18 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   StatusBar,
   Alert,
   ToastAndroid,
   Modal,
-  Vibration
+  TouchableWithoutFeedback
 } from 'react-native'
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+const statusBarHeight = StatusBar.currentHeight || 0;
 
 const App = () => {
   let [ballCount, setBallCount] = useState(0);
@@ -63,7 +64,7 @@ const App = () => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      {text: 'Yes', onPress: resetInning},
+      {text: 'Yes', onPress: resetInning,},
     ]);
   }
 
@@ -85,15 +86,12 @@ const App = () => {
     ]);
   }
 
-
-  
-  
-  const ball = 100;
-  
-  const strike = 300;
-  
-  const out = 500;
-
+    closeControlPanel = () => {
+      this._drawer.close()
+    };
+    openControlPanel = () => {
+      this._drawer.open()
+    };
  
  
   
@@ -128,20 +126,31 @@ const App = () => {
   return (
     
     <View style={styles.container}>
+      
       <StatusBar animated={true} backgroundColor="gray" />
       <ScrollView horizontal={true} pagingEnabled={true}>
         <View style={styles.mainPage}>
-          <View style={styles.navBar}>
-            <TouchableOpacity 
-            style={styles.menuButton} 
-            onPress={() => setModalVisible(true)}>
-              <View style={styles.menu} />
-              <View style={styles.empty} />
-              <View style={styles.menu} />
-              <View style={styles.empty} />
-              <View style={styles.menu} />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.navBar}>
+            <View style={{flexDirection: "row"}}>
+              <View style={{width: 7 * (windowWidth / 100)}}>
+                <TouchableOpacity 
+                  style={styles.menuButton} 
+                  onPress={() => setModalVisible(true)}>
+                    <View style={styles.menu} />
+                    <View style={styles.empty} />
+                    <View style={styles.menu} />
+                    <View style={styles.empty} />
+                    <View style={styles.menu} />
+                </TouchableOpacity>
+              </View>  
+
+              <View style={{width: 82 * (windowWidth / 100)}}>
+                <Text style={styles.navText}>
+                  Count
+                </Text>
+              </View>  
+            </View>  
+          </View> 
 
           <TouchableOpacity style={styles.button}
           onPress={() => setBallCount(ballCount + 1)}>
@@ -278,21 +287,31 @@ const App = () => {
         
         <View style={styles.mainPage}>
           <View style={styles.navBar}>
-            <TouchableOpacity 
-            style={styles.menuButton} 
-            onPress={() => setModalVisible(true)}>
-              <View style={styles.menu} />
-              <View style={styles.empty} />
-              <View style={styles.menu} />
-              <View style={styles.empty} />
-              <View style={styles.menu} />
-            </TouchableOpacity>
-          </View>
+            <View style={{flexDirection: "row"}}>
+              <View style={{width: 7 * (windowWidth / 100)}}>
+                <TouchableOpacity 
+                  style={styles.menuButton} 
+                  onPress={() => setModalVisible(true)}>
+                    <View style={styles.menu} />
+                    <View style={styles.empty} />
+                    <View style={styles.menu} />
+                    <View style={styles.empty} />
+                    <View style={styles.menu} />
+                </TouchableOpacity>
+              </View>  
+
+              <View style={{width: 80 * (windowWidth / 100)}}>
+                <Text style={styles.navText}>
+                  inning
+                </Text>
+              </View>  
+            </View>  
+          </View> 
 
         <View style={{alignItems: "center", height: 25 * (windowHeight / 100), width: windowWidth}}>
-          <View style={{backgroundColor: "white", height: 1 * (windowHeight / 100)}}/>
+          <View style={{backgroundColor: "gray", height: 1 * (windowHeight / 100)}}/>
             <View style={{backgroundColor: "gray", height: 20 * (windowHeight / 100), width: 40 * (windowWidth / 100), borderRadius: 50, alignItems: "center", justifyContent: "center"}}>
-            <View style={{backgroundColor: "#ecf0f1", height: 19 * (windowHeight / 100), width: 38 * (windowWidth / 100), borderRadius: 45, alignItems: "center", justifyContent: "center"}}>
+            <View style={{backgroundColor: "gray", height: 19 * (windowHeight / 100), width: 38 * (windowWidth / 100), borderRadius: 45, alignItems: "center", justifyContent: "center"}}>
               <Text style={{fontSize: 8 * (windowHeight / 100)}}>
                 {`${inningCount}`}
               </Text>
@@ -346,121 +365,155 @@ const App = () => {
 
         <View style={styles.mainPage}>
           <View style={styles.navBar}>
-           <TouchableOpacity 
-            style={styles.menuButton} 
-            onPress={() => setModalVisible(true)}>
-              <View style={styles.menu} />
-              <View style={styles.empty} />
-              <View style={styles.menu} />
-              <View style={styles.empty} />
-              <View style={styles.menu} />
-            </TouchableOpacity>
+            <View style={{flexDirection: "row"}}>
+              <View style={{width: 7 * (windowWidth / 100)}}>
+                <TouchableOpacity 
+                  style={styles.menuButton} 
+                  onPress={() => setModalVisible(true)}>
+                    <View style={styles.menu} />
+                    <View style={styles.empty} />
+                    <View style={styles.menu} />
+                    <View style={styles.empty} />
+                    <View style={styles.menu} />
+                </TouchableOpacity>
+              </View>  
 
+              <View style={{width: 82 * (windowWidth / 100)}}>
+                <Text style={styles.navText}>
+                  Score
+                </Text>
+              </View>  
+            </View>  
 
           </View> 
 
-          <View style={{height: 3 * (windowHeight / 100), backgroundColor: "#ecf0f1"}}/>
-          <View style={{alignItems: "center"}}>
-            <View style={{height: 25 * (windowHeight / 100), width: 85 * (windowWidth / 100), backgroundColor: "gray", borderRadius: 25, flexDirection: "row"}}>
-              <View style={{width: 42.5 * (windowWidth / 100), height: 25 * (windowHeight / 100)}}>
-                <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
-                  <Text style={styles.buttonText}>
-                    Home:
-                  </Text>
-                </View>
-                <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
-                  <Text style={{fontSize: 10 * (windowHeight / 100), fontWeight: 'bold', color: '#000', textAlign: 'center',}}>
-                    {homeCount}
-                  </Text>
-                </View>
-              </View>
+          <View style={{flexDirection:"column"}}>
 
-              <View style={{width: 42.5 * (windowWidth / 100), height: 15 * (windowHeight / 100)}}>
+            <View style={{height: 1 * (windowHeight / 100)}}/>
+
+            <View style={{height: 25 * (windowHeight / 100), width: windowWidth, alignItems: "center"}}>
+
+              <View style={{width: 85 * (windowWidth / 100), height: 25 * (windowHeight / 100), backgroundColor: "gray", borderRadius: 25, flexDirection: "row"}}>
                 <View style={{width: 42.5 * (windowWidth / 100), height: 25 * (windowHeight / 100)}}>
-                <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
-                  <Text style={styles.buttonText}>
-                    Away:
-                  </Text>
+                  <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
+                    <Text style={styles.buttonText}>
+                      Home
+                    </Text>
+                  </View>
+                  <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
+                    <Text style={{fontSize: 10 * (windowHeight / 100), fontWeight: 'bold', color: '#000', textAlign: 'center',}}>
+                      {homeCount}
+                    </Text>
+                  </View>
                 </View>
-                <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
-                  <Text style={{fontSize: 10 * (windowHeight / 100), fontWeight: 'bold', color: '#000', textAlign: 'center',}}>
-                    {awayCount}
-                  </Text>
+
+                <View style={{width: 42.5 * (windowWidth / 100), height: 15 * (windowHeight / 100)}}>
+                  <View style={{width: 42.5 * (windowWidth / 100), height: 25 * (windowHeight / 100)}}>
+                  <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
+                    <Text style={styles.buttonText}>
+                      Away
+                    </Text>
+                  </View>
+                  <View style={{width: 42.5 * (windowWidth / 100), height: 12.5 * (windowHeight / 100), justifyContent: "center", alignItems: "center"}}>
+                    <Text style={{fontSize: 10 * (windowHeight / 100), fontWeight: 'bold', color: '#000', textAlign: 'center',}}>
+                      {awayCount}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-
-              <View style={{width: 42.5 * (windowWidth / 100), height: 15 * (windowHeight / 100)}}>
-              </View>
-
-
-          <View style={{alignItems: "center"}}>
-
-            <TouchableOpacity 
-            style={styles.button} 
-            onPress={() => setHomeCount(homeCount + 1)}>
-              <View style={{justifyContent: "center", alignItems: "center"}}>
-                <Text style={styles.buttonText}>
-                  Home
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-            style={styles.button} 
-            onPress={() => setAwayCount(awayCount + 1)}>
-              <View style={{justifyContent: "center", alignItems: "center"}}>
-                <Text style={styles.buttonText}>
-                  Away
-                </Text>
-              </View>
-            </TouchableOpacity>
-            
-            <TouchableOpacity 
-            style={styles.button} 
-            onPress={handleScoreChange}>
-              <View style={{justifyContent: "center", alignItems: "center"}}>
-                <Text style={styles.buttonText}>
-                  Reset
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>  
-
-              </View>
-
-
-
-
-              
+              </View> 
+              </View> 
             </View>
+
+
+            <View style={{height: 65 * (windowHeight / 100), width: windowWidth, alignItems: "center", justifyContent: "center"}}>
+
+              <View style={{flexDirection:"row"}}>
+                <TouchableOpacity 
+                style={styles.button} 
+                onPress={() => setHomeCount(homeCount + 1)}>
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <Text style={styles.buttonText}>
+                      Home
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                style={styles.miniButton} 
+                onPress={() => setHomeCount(homeCount - 1)}>
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <Text style={styles.buttonText}>
+                      -
+                    </Text>
+                  </View>
+
+
+                </TouchableOpacity>
+              </View>  
+
+              <View style={{flexDirection:"row"}}>
+                <TouchableOpacity 
+                style={styles.button} 
+                onPress={() => setAwayCount(awayCount + 1)}>
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <Text style={styles.buttonText}>
+                      Away
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                style={styles.miniButton} 
+                onPress={() => setAwayCount(awayCount - 1)}>
+                  <View style={{justifyContent: "center", alignItems: "center"}}>
+                    <Text style={styles.buttonText}>
+                      -
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>  
+              
+              <TouchableOpacity 
+              style={{height: 10 * (windowHeight / 100), width: 80 * (windowWidth / 100), backgroundColor: 'gray', padding: 15,  borderRadius: 50, margin: 10, justifyContent: "center"}} 
+              onPress={handleScoreChange}>
+                <View style={{justifyContent: "center", alignItems: "center"}}>
+                  <Text style={styles.buttonText}>
+                    Reset
+                  </Text>
+                </View>
+              </TouchableOpacity>
+  
+            </View>
+
           </View>
         </View> 
         
-        
         <Modal
-        animationIn="slideInRight"
-        animationOut="slideOutLeft"
-        animationInTiming={1000}
-        animationOutTiming={1000}
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={{height: (windowHeight), width : 50 * (windowWidth / 100), backgroundColor: "gray", borderColor: "black", borderRightWidth: 4}}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hit and Run</Text>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </TouchableOpacity>
+          style = {styles.modal}
+          animation="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);  
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <View style={{height: 6 * (windowHeight / 100), width: 85 * (windowWidth / 100), alignItems: "flex-end"}}>
+                <TouchableOpacity style={{backgroundColor:"gray", height: 6 * (windowHeight / 100), width: 12 * (windowWidth / 100), borderTopRightRadius: 10, alignItems:"center", justifyContent:"center"}} onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={{fontWeight: "bold", fontSize: 3*(windowHeight/100)}}>
+                    X
+                  </Text>
+                </TouchableOpacity> 
+              </View>
+            </View>
           </View>
-        </View>
-      </Modal> 
+        </Modal>
+
 
       </ScrollView>  
+      
     </View>
   );
 }
@@ -471,7 +524,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     position: 'relative',
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    paddingTop: statusBarHeight, 
   },
   mainPage: {
     backgroundColor: '#ecf0f1',
@@ -485,6 +538,12 @@ const styles = StyleSheet.create({
     width: windowWidth,
     justifyContent: 'center',
     padding: 9,
+  },
+  navText: {
+    fontSize: 3 * (windowHeight / 100),
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
   },
   menu: {
     backgroundColor: 'black',
@@ -507,7 +566,16 @@ const styles = StyleSheet.create({
     margin: 10,
     height: 10 * (windowHeight / 100),
     width: 50 * (windowWidth / 100),
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  miniButton: {
+    backgroundColor: 'gray',
+    padding: 15,
+    borderRadius: 50,
+    margin: 10,
+    height: 10 * (windowHeight / 100),
+    width: 25 * (windowWidth / 100),
+    justifyContent: "center",
   },
   buttonText: {
     fontSize: 5 * (windowHeight / 100),
@@ -524,5 +592,34 @@ const styles = StyleSheet.create({
   between: {
     width: 3 * (windowWidth / 100),
     backgroundColor: "gray",
-  }
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modal: {
+    height: 55 * (windowHeight / 100),
+    width: 85 * (windowWidth / 100),
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  modalContent: {
+    height: 60 * (windowHeight / 100),
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  buttonClose: {
+    backgroundColor: 'red',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
